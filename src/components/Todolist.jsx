@@ -1,8 +1,7 @@
-
 import { useState } from "react"
 
 
-function Todolist() {
+function Todolist({ searchText, filter }) {
     const [todo, setTodo] = useState([]);
     const [text, setText] = useState("");
 
@@ -27,10 +26,19 @@ function Todolist() {
 
     const doneCount = todo.filter(item => item.done).length
 
+    const filterTodos = todo
+    .filter(item => item.text. toLowerCase(). includes(searchText.toLowerCase()))
+    .filter(item => {
+        if (filter === "active") return !item.done;
+        if (filter === "done") return item.done;
+        return true;
+    });
 
     return (
         <div className="panel">
             <div className="panel-label">ຈຸດກວດ 2</div>
+          
+
             <div className="add-row">
                 <input type="text" value={text} onChange={e => handleOnInputChange(e.target.value)} placeholder="ເພິ່ມວຽກ..." />
                 <button className="btn add"
@@ -38,12 +46,12 @@ function Todolist() {
                 >add</button>
             </div>
             <div style={{ height: '1rem' }}></div>
-            <div className="todo-count"><b>{doneCount}</b> of {todo.length} done</div>
-            {todo.length === 0 ? (
+            <div className="todo-count"><b>{doneCount}</b> of {filterTodos.length} done</div>
+            {filterTodos.length === 0 ? (
                 <div className="empty">ຍັງບໍມີວຽກ</div>
             ) : (
                 <ul className="todos">
-                    {todo.map(item => (
+                    {filterTodos.map(item => (
                         <li className={item.done ? "done" : ""}>
                             <span className="text"
                                 onClick={() => toggleTodo(item.id)}
