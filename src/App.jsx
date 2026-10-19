@@ -22,7 +22,7 @@ function App() {
         <p>{filter}</p>
         <div/>
        
-        <Todolist searchText={searchText} />
+        <Todolist searchText={searchText} filter={filter} />
       </div>
     </div>
   );
